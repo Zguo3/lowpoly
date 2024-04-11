@@ -7,6 +7,11 @@ import addon_utils
 
 app = typer.Typer()
 
+def main(file_path: str, target_faces: int = 7500, texture_resolution: int = 2048, multiresolution_levels: int = 3):
+    enable_3d_printing_addon()
+    import_fbx(file_path)
+    # Add your code here to use the other parameters: target_faces, texture_resolution, multiresolution_levels
+
 
 def enable_3d_printing_addon():
     # bpy.ops.wm.addon_enable(module="3d_print_tools")
@@ -36,6 +41,8 @@ def import_obj(file_path):
 
 def import_usdz(file_path):
     bpy.ops.wm.usd_import(filepath=file_path)
+
+app.add_typer(main, name="")
 
 
 @app.command()
