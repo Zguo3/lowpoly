@@ -7,17 +7,17 @@ on:
         description: 'Input file to convert to low poly GLB'
         required: true
       target_faces:
-        description: 'Target number of faces for the low poly model'
+        description: 'Target number of the low poly model'
         required: false
-        default: 7500
+        default: 6000
       texture_resolution:
-        description: 'Texture resolution size'
+        description: 'Texture size'
         required: false
-        default: 2048
+        default: 1024
       multiresolution_levels:
         description: 'Multiresolution levels'
         required: false
-        default: 3
+        default: 4
 
 jobs:
   build:
