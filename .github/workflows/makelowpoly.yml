@@ -1,22 +1,21 @@
 name: Make Low Poly GLB
 
-
 on:
   workflow_dispatch:
     inputs:
       filename:
         description: 'Input file to convert to low poly GLB'
         required: true
-      targetfaces:
+      target_faces:
         description: 'Target number of faces for the low poly model'
         required: false
         default: 7500
       texture_resolution:
-        description: 'Texture resolution for the low poly model'
+        description: 'Texture resolution size'
         required: false
         default: 2048
       multiresolution_levels:
-        description: 'Number of multiresolution levels for the low poly model'
+        description: 'Multiresolution levels'
         required: false
         default: 3
 
@@ -28,21 +27,11 @@ jobs:
     steps:
       - name: checkout repo
         uses: actions/checkout@v4
-  
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: 3.10.11
-
-      # - name: Install Linux Dependencies
-      #   run: |
-
-      #     sudo apt update
-      #     sudo apt-get install -y build-essential git subversion cmake libx11-dev libxxf86vm-dev libxcursor-dev libxi-dev libxrandr-dev libxinerama-dev libegl-dev
-      #     sudo apt-get install -y libwayland-dev wayland-protocols libxkbcommon-dev libdbus-1-dev linux-libc-dev
-
-      # install blender bpy
 
       - name: Install Blender and Typer
         run: |
@@ -50,14 +39,11 @@ jobs:
           python -m pip install --upgrade bpy --extra-index-url https://github.com/michaelgold/buildbpy
           python -m pip install --upgrade requests python-dotenv typer=='0.9.0' httpx
 
-     
-
       - name: Convert to Low Poly
         run: |
-          python lowpoly.py -- filename ${{ github.event.inputs.filename }} --targetfaces ${{ github.event.inputs.targetfaces }} --texture_resolution ${{ github.event.inputs.texture_resolution }} --multiresolution_levels ${{ github.event.inputs.multiresolution_levels }}
+          python lowpoly.py ${{ github.event.inputs.filename }} --target-faces ${{ github.event.inputs.target_faces }} --texture-resolution ${{ github.event.inputs.texture_resolution }} --multiresolution-levels ${{ github.event.inputs.multiresolution_levels }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 
       - name: Upload GLB file as an artifact
         uses: actions/upload-artifact@v4
