@@ -10,6 +10,7 @@ app = typer.Typer()
 
 def enable_3d_printing_addon():
     # bpy.ops.wm.addon_enable(module="3d_print_tools")
+    # helloworld
     addon_utils.enable("object_print3d_utils")
 
 
